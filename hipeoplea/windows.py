@@ -169,7 +169,7 @@ def settings():
     c[4] = '1'
     copy = ' '.join(c)
     saves.close()
-    f = open('lvl.txt', 'w')
+    f = open('data\lvl.txt', 'w')
     f.write(copy)
     f.close()
 
