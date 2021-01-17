@@ -4,7 +4,7 @@ pygame.init()
 
 
 class Slider:
-    def __init__(self, name, val, maxi, mini, position, size):
+    def __init__(self, name, val, maxi, mini, position, size, font):
         self.val = val
         self.maxi = maxi
         self.mini = mini
@@ -13,17 +13,16 @@ class Slider:
         self.length = size[0] - 20
         self.surf = pygame.surface.Surface(size)
         self.hit = False
-        font = pygame.font.Font("12243.otf", 18)
 
-        self.txt_surf = font.render(name, True, (50, 50, 50))
+        self.txt_surf = font.render(name, True, (138, 43, 226))
         self.txt_rect = self.txt_surf.get_rect(center=(80, 15))
 
         # background слайдера #
         self.surf.fill((245, 245, 220))
         pygame.draw.rect(self.surf, (255, 255, 255), [0, 0, size[0], size[1]], 3)
-        pygame.draw.rect(self.surf, (71, 159, 66),
-                         [self.txt_rect[0] - 5, self.txt_rect[1], self.txt_rect[2] + 5, self.txt_rect[3]], 0)
-        pygame.draw.rect(self.surf, (71, 159, 66), [10, 40, size[0] - 20, 8], 0)
+        #pygame.draw.rect(self.surf, (138, 43, 226),
+        #                 [self.txt_rect[0] - 5, self.txt_rect[1], self.txt_rect[2] + 5, self.txt_rect[3]], 0)
+        pygame.draw.rect(self.surf, (138, 43, 226), [10, 40, size[0] - 20, 8], 0)
 
         self.surf.blit(self.txt_surf, self.txt_rect)
 
@@ -32,7 +31,7 @@ class Slider:
         self.button_surf.fill((1, 1, 1))
         self.button_surf.set_colorkey((1, 1, 1))
         pygame.draw.circle(self.button_surf, (0, 0, 0), (30, 30), 8, 0)
-        pygame.draw.circle(self.button_surf, (0, 255, 50), (30, 30), 6, 0)
+        pygame.draw.circle(self.button_surf, (138, 43, 226), (30, 30), 6, 0)
 
     def draw(self, surface):
         surf = self.surf.copy()
@@ -54,7 +53,3 @@ class Slider:
 
     def get_value(self):
         return self.val
-# это код для проверки работоспособности класса в будующем его не будет#
-
-
-

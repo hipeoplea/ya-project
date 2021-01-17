@@ -1,26 +1,41 @@
+import os
 import Button
 import pygame
 from background import Background
 from slider import Slider
 
 pygame.init()
-pygame.mixer.music.load('soundtrack.ogg')
+pygame.mixer.music.load(os.path.join('data\sounds', 'soundtrack.ogg'))
+click = pygame.mixer.Sound(os.path.join('data\sounds', 'click.wav'))
+lucky = pygame.mixer.Sound(os.path.join('data\sounds', 'luck.ogg'))
 screen = pygame.display.set_mode((900, 700))
 pygame.display.set_caption("Novel")
 clock = pygame.time.Clock()
-f1 = pygame.font.Font('12243.otf', 36)
-f2 = pygame.font.Font('12243.otf', 18)
-f3 = pygame.font.Font('12243.otf', 24)
 
-startBackGround = Background('background_image.png', [0, 0])
-settingsBackGround = Background('settings.png', [0, 0])
-loadBackGround = Background('background_image.png', [0, 0])
+f1 = pygame.font.Font(os.path.join('data', 'font.otf'), 36)
+f2 = pygame.font.Font(os.path.join('data', 'font.otf'), 18)
+f3 = pygame.font.Font(os.path.join('data', 'font.otf'), 24)
+
+startBackGround = Background(os.path.join('data', 'backgrounds', 'menuBack.png'), [0, 0])
+menu2 = Background(os.path.join('data', 'backgrounds', 'menuBack2.png'), [0, 0])
 
 locations = {'0': 'пустой слот',
              '1': 'пролог',
-             '2': 'unt',
-             '3': 'unt',
-             '4': 'unt'}
+             '2': 'флешбек',
+             '3': 'начало расследования',
+             '4': 'звонок',
+             '5': 'на пути к хисоке',
+             '6': 'в ожидании иллуми',
+             '7': 'казино',
+             '11': 'просьба о помощи',
+             '12': 'запись с камер',
+             '13': 'сами справимся',
+             '14': 'заплатим',
+             '15': 'не хватает денег',
+             '16': 'камера',
+             '17': 'встреча с иллуми',
+             '18': 'встретили иллуми'}
+
 
 def get_key(d, value):
     for k, v in d.items():
@@ -45,7 +60,7 @@ def startWindow():
     exB = Button.Button()
     exB.create_button(screen, (245, 245, 220), 80, 500, 200, 50, 0, 'exit', (68, 45, 37))
 
-    saves = open('lvl.txt')
+    saves = open(os.path.join('data', 'lvl.txt'))
     c = saves.read().split()
     if c[4] == '0':
         hiden = f2.render('Загляни в настройки ведь это твой первый раз в игре', True, (240, 240, 240))
@@ -59,7 +74,7 @@ def startWindow():
                 c[4] = '1'
                 copy = ' '.join(c)
                 saves.close()
-                f = open('lvl.txt', 'w')
+                f = open(os.path.join('data', 'lvl.txt'), 'w')
                 f.write(copy)
                 f.close()
                 start = False
@@ -81,12 +96,12 @@ def startWindow():
 
 
 def loadWindow():
-    screen.fill([255, 255, 255])
-
-    screen.blit(loadBackGround.image, loadBackGround.rect)
+    screen.fill([245, 245, 220])
+    screen.blit(menu2.image, menu2.rect)
     start = True
+
     count = 0
-    saves = open('lvl.txt').read().split()
+    saves = open(os.path.join('data', 'lvl.txt')).read().split()
     loc = []
     for i in saves[0:4]:
         loc.append(locations[i])
@@ -142,10 +157,11 @@ def load(location):
 
 def settings():
     screen.fill([245, 245, 220])
-    screen.blit(settingsBackGround.image, loadBackGround.rect)
+    screen.blit(menu2.image, menu2.rect)
     start = True
 
-    saves = open('lvl.txt')
+
+    saves = open(os.path.join('data', 'lvl.txt'))
     c = saves.read().split()
     if c[4] == '0':
         hiden = f3.render('Привет я рада что ты сюда заглянул) Как тебе музыка?^-^', True, (80, 150, 80))
@@ -169,7 +185,7 @@ def settings():
     ex = f3.render('you still need esc to exit to menu', True, (215, 24, 104))
     screen.blit(ex, (0, 676))
 
-    music = Slider("Music Volume", 1, 300, 1, (20, 20), (400, 70))
+    music = Slider("Music Volume", 300, 300, 1, (20, 20), (400, 70), f2)
 
     off = Button.Button()
     off.create_button(screen, (90, 255, 100), 30, 150, 200, 50, 0, 'off', (68, 45, 37))
@@ -177,7 +193,7 @@ def settings():
     while start:
         music.draw(screen)
         pygame.display.flip()
-        int(music.get_value())
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 start = False
@@ -190,6 +206,7 @@ def settings():
                 pos = pygame.mouse.get_pos()
                 if music.button_rect.collidepoint(pos):
                     music.hit = True
+                    pygame.mixer.music.set_volume(int(music.get_value()) / 300)
                 if off.pressed(pos):
                     pygame.mixer.music.set_volume(0)
             elif event.type == pygame.MOUSEBUTTONUP:
