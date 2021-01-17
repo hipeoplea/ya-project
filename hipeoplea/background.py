@@ -2,7 +2,6 @@ import pygame
 
 pygame.init()
 
-
 class Background(pygame.sprite.Sprite):
     def __init__(self, image_file, location):
         pygame.sprite.Sprite.__init__(self)

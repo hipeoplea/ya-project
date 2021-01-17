@@ -105,23 +105,23 @@ def loadWindow():
     loc = []
     for i in saves[0:4]:
         loc.append(locations[i])
-        slotText = f1.render(locations[i], True, (90, 255, 100))
-        screen.blit(slotText, (400, 200 + 100 * count))
+        slotText = f1.render(locations[i], True, (0, 0, 0))
+        screen.blit(slotText, (300, 100 + 100 * count))
         count += 1
 
     screen.blit(f1.render('to go back click esc ^^', False, (0, 0, 0)), (0, 664))
 
     slot1 = Button.Button()
-    slot1.create_button(screen, (90, 255, 100), 80, 200, 200, 50, 0, '1 save', (68, 45, 37))
+    slot1.create_button(screen, (90, 255, 100), 40, 100, 200, 50, 0, '1 save', (68, 45, 37))
 
     slot2 = Button.Button()
-    slot2.create_button(screen, (90, 255, 100), 80, 300, 200, 50, 0, '2 save', (68, 45, 37))
+    slot2.create_button(screen, (90, 255, 100), 40, 200, 200, 50, 0, '2 save', (68, 45, 37))
 
     slot3 = Button.Button()
-    slot3.create_button(screen, (90, 255, 100), 80, 400, 200, 50, 0, '3 save', (68, 45, 37))
+    slot3.create_button(screen, (90, 255, 100), 40, 300, 200, 50, 0, '3 save', (68, 45, 37))
 
     slot4 = Button.Button()
-    slot4.create_button(screen, (90, 255, 100), 80, 500, 200, 50, 0, '4 save', (68, 45, 37))
+    slot4.create_button(screen, (90, 255, 100), 40, 400, 200, 50, 0, '4 save', (68, 45, 37))
 
     while start:
         clock.tick(60)
