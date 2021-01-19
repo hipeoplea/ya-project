@@ -2,31 +2,27 @@ import pygame
 import os
 
 pygame.init()
-defF = os.path.join("font", "DejaVuSans.ttf")
+defF = os.path.join("data", "font.otf")
 
 
 class Dialog(pygame.sprite.Sprite):
     def __init__(self, screen, photo=None):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("image/49.png").convert()  # Фон диалога
+        self.image = pygame.image.load("data/backgrounds/49.png")  # Фон диалога
         self.rect = self.image.get_rect()
-        self.rect.center = (400, 530)
-        self.image.set_alpha(220)  # Прозрачность
+        self.rect.center = (450, 650)
+        self.image.set_alpha(200)  # Прозрачность
         if photo:
             self.photo = pygame.image.load(photo).convert_alpha()  # Боковое изображение
         else:
             self.photo = None
-        self.dFont = pygame.font.Font("12243.otf", 16)  # Шрифт
+        self.dFont = pygame.font.Font("data/font.otf", 16)  # Шрифт
         self.message = (
             "This is a sample of using dialog box.",
             "The message that shown in the dialog box ",
             "has to be a tuple or list.",
         )
         self.screen = screen
-        self.nextImage = pygame.image.load('next.png').convert_alpha()  # Стрелка перехода
-        self.nextImageRect = self.nextImage.get_rect()
-        self.nextImageRect.right = 410
-        self.nextImageRect.bottom = 120
         self.show = True
 
     def sndNext(self):
@@ -76,14 +72,11 @@ class Dialog(pygame.sprite.Sprite):
                         text_pos = 0
                 if line > len(self.message) - 1:
                     outOfText = True
-                if outOfText or nextPage:
-                    textImage.blit(self.nextImage, self.nextImageRect)
                 textSurf = self.dFont.render(text, False, (255, 255, 255, 0))
             self.screen.blit(lastScreen, (0, 0))
             self.screen.blit(self.image, self.rect)
-            self.screen.blit(textSurf, (self.rect.left + 34, lineCount * 20 + 4 + self.rect.top))
+            self.screen.blit(textSurf, (self.rect.left + 50, lineCount * 20 + 4 + self.rect.top))
             self.screen.blit(textImage, self.rect)
-            pygame.draw.rect(self.screen, (255, 255, 255), (self.rect), 2)
             if self.photo:
                 self.screen.blit(self.photo, (150, 170))
             pygame.display.flip()
