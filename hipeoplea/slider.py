@@ -13,6 +13,7 @@ class Slider:
         self.length = size[0] - 20
         self.surf = pygame.surface.Surface(size)
         self.hit = False
+        font = font
 
         self.txt_surf = font.render(name, True, (138, 43, 226))
         self.txt_rect = self.txt_surf.get_rect(center=(80, 15))
@@ -53,3 +54,5 @@ class Slider:
 
     def get_value(self):
         return self.val
+
+
